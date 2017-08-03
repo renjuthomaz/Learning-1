@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="org.learn.forum.domain.Question" table="FORUM_QUESTION">
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+
+		<property name="header" type="java.lang.String">
+			<column name="HEADER" />
+		</property>
+
+		<property name="description" type="java.lang.String">
+			<column name="DESCRIPTION" />
+		</property>
+
+		<many-to-one name="topic" class="org.learn.forum.domain.Topic"
+			column="TOPIC_ID" fetch="select">
+		</many-to-one>
+
+		<set name="answers" table="FOURUM_ANSWER" fetch="select">
+			<key column="QUESTION_ID" />
+			<one-to-many class="org.learn.forum.domain.Answer" />
+		</set>
+
+	</class>
+</hibernate-mapping>

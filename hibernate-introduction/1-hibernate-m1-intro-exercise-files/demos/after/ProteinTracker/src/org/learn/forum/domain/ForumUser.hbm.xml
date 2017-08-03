@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="org.learn.forum.domain.ForumUser" table="FORUM_USER">
+		<id name="id" type="int">
+			<column name="USER_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="userName" type="java.lang.String">
+			<column name="USER_NAME" />
+		</property>
+
+		<set name="interestedTopics" table="USER_TOPICS" inverse="false"
+			fetch="select">
+			<key>
+				<column name="USER_ID" not-null="true" />
+			</key>
+			<many-to-many entity-name="org.learn.forum.domain.Topic">
+				<column name="TOPIC_ID" not-null="true" />
+			</many-to-many>
+		</set>
+
+	</class>
+</hibernate-mapping>

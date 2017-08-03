@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="org.learn.domain.User" table="USERS">
+		<id name="id" type="int">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" />
+		</property>
+		<property name="travelCount" type="int">
+			<column name="TRAVEL_COUNT" />
+		</property>
+
+		<!-- Value type relation same table -->
+		<component name="userAddress">
+			<property name="houseNo" type="java.lang.String">
+				<column name="HOUSE_NO" />
+			</property>
+
+			<property name="street1" type="java.lang.String">
+				<column name="STREET_1" />
+			</property>
+
+			<property name="street2" type="java.lang.String">
+				<column name="STREET_2" />
+			</property>
+		</component>
+		<!-- Collection different table Using Set -->
+		<!-- <set name="userHistories" table="USER_HISTORY"> <key column="ID" /> 
+			<composite-element class="org.learn.domain.UserHistory"> <property name="tripTime" 
+			type="date" column="TRIP_TIME" /> <property name="tripMode" type="string" 
+			column="TRIP_MODE" /> </composite-element> </set> -->
+
+		<!-- Collection different table Using List -->
+		<!-- <list name="userHistories" table="USER_HISTORY"> <key column="ID" 
+			/> <list-index column="POSITION" /> <composite-element class="org.learn.domain.UserHistory"> 
+			<property name="tripTime" type="date" column="TRIP_TIME" /> <property name="tripMode" 
+			type="string" column="TRIP_MODE" /> </composite-element> </list> -->
+
+		<!-- Collection different table Using Map -->
+		<!-- <map name="userHistories" table="USER_HISTORY"> <key column="ID" /> 
+			<map-key type="string" column="ENTRY_IDENTIFIER" /> <composite-element class="org.learn.domain.UserHistory"> 
+			<property name="tripTime" type="date" column="TRIP_TIME" /> <property name="tripMode" 
+			type="string" column="TRIP_MODE" /> </composite-element> </map> -->
+
+		<list name="userHistories" table="USER_HISTORY" cascade="all">
+			<key column="USER_ID" />
+			<list-index column="POSITION" />
+			<one-to-many class="org.learn.domain.UserHistory" />
+		</list>
+		<one-to-one name="contact" class="org.learn.domain.UserContact"
+			cascade="all" />
+
+		<!-- <join table="VISITED_COUNTRIES">
+			<key column="USER_ID"/>
+			<many-to-one name=""></many-to-one>			
+		</join> -->
+	</class>
+</hibernate-mapping>
